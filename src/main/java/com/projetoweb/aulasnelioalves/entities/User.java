@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +32,11 @@ public class User implements Serializable {
 	// temos aqui a associação de um para muitos do Order.java
 	// aqui estamos dizendo que podemos consultar muitos pedidos de um cliente
 	@OneToMany(mappedBy = "client")
+	// Como temos uma associação em Order.java e aqui em User.java o jackson vai ficar
+	// chamando uma e outra em um loop infinito, serializando o json para visualização 
+	// e para evitar isso inserimos essa anotação
+	// isso é para os casos de associação de mão dupla
+	@JsonIgnore
 	private List<Order> orders = new ArrayList<>();
 	
 	public User() {
