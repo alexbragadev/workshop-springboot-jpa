@@ -1,11 +1,14 @@
 package com.projetoweb.aulasnelioalves.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +27,10 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private String password;
+	// temos aqui a associação de um para muitos do Order.java
+	// aqui estamos dizendo que podemos consultar muitos pedidos de um cliente
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
 	
 	public User() {
 	}
@@ -74,6 +81,10 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
 	}
 
 	@Override
